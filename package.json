@@ -1,0 +1,26 @@
+{
+  "name": "ans-nauhub-starter",
+  "version": "1.0.0",
+  "private": false,
+  "description": "ANS (AI Never Stops) × 南京农业大学 (NAU) — NAUHub 官方联合开发脱敏脚手架、UI 设计稿与接入契约包",
+  "scripts": {
+    "dev": "next dev --port 3456",
+    "build": "next build",
+    "start": "next start --port 3456",
+    "typecheck": "tsc --noEmit",
+    "verify": "node scripts/verify-nauhub.mjs",
+    "preview:mockup": "node scripts/preview-mockup.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^0.475.0",
+    "next": "^15.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.0"
+  }
+}

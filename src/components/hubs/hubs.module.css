@@ -1,0 +1,97 @@
+/**
+ * 与 ANS 主站 `src/components/hubs/hubs.module.css` 保持 1:1 兼容的样式表，
+ * 并扩展 NAUHub 专属的 4 步参赛流水线、四大农科赛道与设计规范标注视图。
+ */
+
+.container { padding-block: 1.25rem 3.5rem; }
+.compactHeader { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+.detailHeader { padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+.compactHeaderCopy { min-width: 0; flex: 1 1 20rem; }
+.detailTitleRow { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
+.typePill { display: inline-flex; align-items: center; gap: .35rem; padding: .22rem .7rem; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: .75rem; font-weight: 600; }
+.eyebrow { font-size: .75rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted-foreground); letter-spacing: .04em; margin-bottom: .35rem; font-variant-numeric: tabular-nums; }
+.compactTitle { font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 650; letter-spacing: -.035em; line-height: 1.2; }
+.headerToolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+.search { display: flex; align-items: center; gap: .5rem; width: min(100%, 22rem); }
+.searchInput { flex: 1; min-height: 2.5rem; padding: .45rem .85rem; border-radius: .625rem; border: 0; background: var(--surface-1); color: var(--foreground); box-shadow: inset 0 0 0 1px var(--border); font-size: .875rem; }
+.searchInput:focus { outline: none; box-shadow: inset 0 0 0 1.5px var(--primary), 0 0 0 3px var(--ring); }
+.topBar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: 1rem; }
+.topActions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.actionPrimary, .actionOutline { display: inline-flex; align-items: center; justify-content: center; gap: .35rem; min-height: 2.5rem; padding: .45rem .95rem; border-radius: .625rem; font-size: .8125rem; font-weight: 550; cursor: pointer; border: 0; transition: background-color 150ms ease, transform 120ms ease; }
+.actionPrimary { background: var(--primary); color: var(--primary-foreground); }
+.actionPrimary:hover { opacity: .92; }
+.actionOutline { background: var(--surface-2); color: var(--foreground); box-shadow: inset 0 0 0 1px var(--border); }
+.actionOutline:hover { background: var(--surface-hover); }
+
+/* Directory 2-col Grid */
+.directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.hub { position: relative; padding: 1.5rem; min-width: 0; border-radius: .875rem; background: var(--surface-1); box-shadow: inset 0 0 0 1px var(--border); transition: background-color 150ms ease, transform 150ms ease; }
+.hub:hover { background: var(--surface-hover); transform: translateY(-1px); }
+.hubHighlight { box-shadow: inset 0 0 0 1.5px var(--primary); }
+.identity { display: flex; align-items: center; gap: .65rem; color: var(--muted-foreground); font-size: .75rem; }
+.identity > svg { width: 1.35rem; height: 1.35rem; color: var(--primary); }
+.packCount { margin-inline-start: auto; padding: .15rem .55rem; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: .75rem; font-weight: 550; font-variant-numeric: tabular-nums; }
+.hub h2 { margin-top: 1rem; font-size: 1.35rem; font-weight: 600; letter-spacing: -.03em; }
+.hub h2 a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.hub h2 a::after { content: ""; position: absolute; inset: 0; border-radius: .875rem; }
+.hub > p { margin-top: .6rem; color: var(--muted-foreground); font-size: .875rem; line-height: 1.7; max-width: 55ch; text-wrap: pretty; }
+.hub > p.summary { margin-top: 1rem; padding-top: .75rem; border-top: 1px solid var(--border); color: var(--foreground); font-size: .8125rem; font-variant-numeric: tabular-nums; }
+
+.lede { max-width: 68ch; margin-top: .45rem; color: var(--muted-foreground); font-size: .9375rem; line-height: 1.7; text-wrap: pretty; }
+.note { color: var(--muted-foreground); font-size: .8125rem; line-height: 1.7; margin-top: .65rem; max-width: 72ch; }
+.section { margin-top: 2rem; }
+.section h2 { font-size: 1.1875rem; font-weight: 600; letter-spacing: -.02em; }
+.sectionHeader { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: .5rem 1rem; }
+.sectionHeader > p, .section > p { color: var(--muted-foreground); font-size: .8125rem; line-height: 1.7; max-width: 70ch; }
+
+/* 4-Step Pipeline Grid */
+.pipelineGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .875rem; margin-top: 1rem; }
+.pipelineCard { position: relative; border-radius: .875rem; padding: 1.125rem; background: var(--surface-1); box-shadow: inset 0 0 0 1px var(--border); display: flex; flex-direction: column; justify-content: space-between; gap: .75rem; }
+.stepBadge { display: inline-flex; align-items: center; padding: .15rem .5rem; border-radius: .375rem; background: var(--primary-soft); color: var(--primary); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .75rem; font-weight: 600; font-variant-numeric: tabular-nums; width: fit-content; }
+.pipelineCard h3 { font-size: .9375rem; font-weight: 600; margin-top: .35rem; }
+.pipelineCard p { font-size: .8125rem; color: var(--muted-foreground); line-height: 1.6; text-wrap: pretty; }
+.stepLink { display: inline-flex; align-items: center; justify-content: space-between; padding: .45rem .75rem; border-radius: .5rem; background: var(--surface-2); color: var(--foreground); font-size: .75rem; font-weight: 600; transition: background-color 150ms ease; }
+.stepLink:hover { background: var(--primary-soft); color: var(--primary); }
+
+/* 4-Track Campus Grid */
+.tracksGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
+.trackCard { border-radius: .875rem; padding: 1.25rem; background: var(--surface-1); box-shadow: inset 0 0 0 1px var(--border); display: flex; flex-direction: column; gap: .5rem; }
+.trackHeader { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.trackCode { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .75rem; font-weight: 600; color: var(--primary); padding: .15rem .55rem; border-radius: 999px; background: var(--primary-soft); }
+.trackRole { font-size: .75rem; color: var(--muted-foreground); }
+.trackCard h3 { font-size: 1.05rem; font-weight: 600; }
+.trackCard p { font-size: .8125rem; color: var(--muted-foreground); line-height: 1.65; text-wrap: pretty; }
+.deliverableBox { margin-top: .35rem; padding: .5rem .75rem; border-radius: .5rem; background: var(--surface-2); font-size: .75rem; color: var(--foreground); font-weight: 500; }
+
+/* 3-col Entries Grid (Outer radius 14px = Inner cover radius 10px + 4px visual inset) */
+.entries { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
+.entry { position: relative; border-radius: .875rem; padding: 1.125rem; min-width: 0; background: var(--surface-1); box-shadow: inset 0 0 0 1px var(--border); display: flex; flex-direction: column; }
+.entryCard { transition: background-color 150ms ease, transform 150ms ease; }
+.entryCard:hover { background: var(--surface-hover); transform: translateY(-1px); }
+.entryMeta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .5rem; }
+.pointsBadge { padding: .15rem .5rem; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: .75rem; font-weight: 550; font-variant-numeric: tabular-nums; }
+.collegeBadge { padding: .15rem .5rem; border-radius: 999px; background: var(--surface-2); color: var(--muted-foreground); font-size: .75rem; font-weight: 500; }
+.entry h3 { font-weight: 600; font-size: .9375rem; line-height: 1.5; }
+.entry h3 a { display: flex; align-items: flex-start; justify-content: space-between; gap: .65rem; }
+.stretchedLink::after { content: ""; position: absolute; inset: 0; border-radius: .875rem; }
+.entry > p { color: var(--muted-foreground); font-size: .8125rem; line-height: 1.65; margin-top: .45rem; text-wrap: pretty; }
+.authorRow { margin-top: auto; padding-top: .75rem; font-size: .75rem; color: var(--muted-foreground); display: flex; align-items: center; justify-content: space-between; }
+.kind { display: inline-block; color: var(--primary); font-size: .75rem; margin-bottom: .45rem; font-weight: 550; }
+.entryMeta .kind { margin-bottom: 0; }
+.cover { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: .5rem; box-shadow: inset 0 0 0 1px var(--border); margin-bottom: .85rem; display: block; }
+.back { display: inline-flex; align-items: center; gap: .4rem; min-height: 2.5rem; font-size: .8125rem; color: var(--muted-foreground); cursor: pointer; background: none; border: 0; }
+.back:hover { color: var(--foreground); }
+.nextStep { margin-top: 2.25rem; padding: 1.25rem 1.5rem; border-radius: .875rem; background: var(--surface-1); box-shadow: inset 0 0 0 1px var(--border); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+.nextStepTitle { font-size: 1rem; font-weight: 600; }
+.nextStepCopy { font-size: .8125rem; color: var(--muted-foreground); margin-top: .25rem; text-wrap: pretty; }
+
+@media (max-width: 1080px) {
+  .entries, .pipelineGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+  .container { padding-block: 1rem 2.5rem; }
+  .directory, .entries, .pipelineGrid, .tracksGrid { grid-template-columns: minmax(0, 1fr); }
+  .hub { padding: 1.25rem; }
+  .hub h2 { font-size: 1.2rem; }
+  .search { width: 100%; }
+}

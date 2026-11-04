@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAUHub · 南京农业大学 AI 与智慧农科专区 | ANS (AI Never Stops) UI 设计稿</title>
+  <style>
+    :root, [data-theme="light"] {
+      --background: #f5f5f3;
+      --surface-1: #fcfcfb;
+      --surface-2: #efefec;
+      --surface-hover: #eaeae6;
+      --foreground: #181816;
+      --muted: #ecece8;
+      --muted-foreground: #5c5c56;
+      --border: #e2e2dc;
+      --primary: #1b6b4c;
+      --primary-foreground: #fcfcfb;
+      --primary-soft: rgba(27, 107, 76, 0.1);
+      --ring: rgba(27, 107, 76, 0.35);
+      --font-weight-body: 400;
+    }
+    [data-theme="dark"] {
+      --background: #0b0b0a;
+      --surface-1: #151515;
+      --surface-2: #1a1a19;
+      --surface-hover: #20201e;
+      --foreground: #f2f2ee;
+      --muted: #1a1a19;
+      --muted-foreground: #9ca39b;
+      --border: #262624;
+      --primary: #34d399;
+      --primary-foreground: #0c1f17;
+      --primary-soft: rgba(52, 211, 153, 0.13);
+      --ring: rgba(52, 211, 153, 0.4);
+      --font-weight-body: 360;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Inter", sans-serif;
+      font-weight: var(--font-weight-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .ans-product-container { max-width: 1240px; margin-inline: auto; padding-inline: 1.5rem; }
+    .navbar { border-bottom: 1px solid var(--border); background-color: var(--surface-1); position: sticky; top: 0; z-index: 30; }
+    .navbar-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; padding-block: .75rem; }
+    .brand { font-weight: 700; font-size: .95rem; letter-spacing: -.02em; display: inline-flex; align-items: center; gap: .45rem; }
+    .brand-dot { width: 10px; height: 10px; border-radius: 999px; background-color: var(--primary); display: inline-block; }
+    .nav-links { font-size: .8125rem; color: var(--muted-foreground); margin-left: 1rem; }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; }
+    .btn-primary, .btn-outline {
+      display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
+      min-height: 2.35rem; padding: .4rem .85rem; border-radius: .625rem;
+      font-size: .8125rem; font-weight: 550; cursor: pointer; border: 0;
+    }
+    .btn-primary { background: var(--primary); color: var(--primary-foreground); }
+    .btn-outline { background: var(--surface-2); color: var(--foreground); box-shadow: inset 0 0 0 1px var(--border); }
+    .container { padding-block: 1.5rem 3.5rem; }
+    .header-box { padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+    .eyebrow { font-size: .75rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted-foreground); letter-spacing: .04em; margin-bottom: .35rem; font-variant-numeric: tabular-nums; }
+    .pill { display: inline-flex; align-items: center; gap: .35rem; padding: .2rem .65rem; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: .75rem; font-weight: 600; }
+    .title-row { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
+    h1 { font-size: 1.85rem; font-weight: 650; letter-spacing: -.035em; line-height: 1.2; }
+    .lede { max-width: 68ch; margin-top: .45rem; color: var(--muted-foreground); font-size: .9375rem; line-height: 1.7; text-wrap: pretty; }
+    .note { color: var(--muted-foreground); font-size: .8125rem; margin-top: .55rem; }
+    .directory-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .hub-card { position: relative; padding: 1.4rem; border-radius: .875rem; background: var(--surface-1); box-shadow: inset 0 0 0 1px var(--border); }
+    .hub-card.highlight { box-shadow: inset 0 0 0 1.8px var(--primary); }
+    .hub-meta { display: flex; align-items: center; justify-content: space-between; font-size: .75rem; color: var(--muted-foreground); }
+    .hub-card h2 { margin-top: .85rem; font-size: 1.3rem; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+    .hub-card p { margin-top: .5rem; font-size: .875rem; color: var(--muted-foreground); }
+    .hub-card .summary { margin-top: .95rem; padding-top: .7rem; border-top: 1px solid var(--border); color: var(--foreground); font-size: .8125rem; font-variant-numeric: tabular-nums; }
+    .section { margin-top: 1.85rem; }
+    .section h2 { font-size: 1.15rem; font-weight: 600; letter-spacing: -.02em; }
+    .section-sub { font-size: .8125rem; color: var(--muted-foreground); margin-top: .2rem; }
+    .pipeline-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .875rem; margin-top: .9rem; }
+    .pipeline-card { border-radius: .875rem; padding: 1.05rem; background: var(--surface-1); box-shadow: inset 0 0 0 1px var(--border); display: flex; flex-direction: column; justify-content: space-between; gap: .65rem; }
+    .step-badge { display: inline-flex; padding: .15rem .5rem; border-radius: .375rem; background: var(--primary-soft); color: var(--primary); font-family: ui-monospace, monospace; font-size: .75rem; font-weight: 600; width: fit-content; }
+    .pipeline-card h3 { font-size: .925rem; font-weight: 600; margin-top: .35rem; }
+    .pipeline-card p { font-size: .8rem; color: var(--muted-foreground); line-height: 1.55; }
+    .step-cta { display: flex; align-items: center; justify-content: space-between; padding: .4rem .7rem; border-radius: .5rem; background: var(--surface-2); font-size: .75rem; font-weight: 600; }
+    .tracks-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .95rem; margin-top: .9rem; }
+    .track-card { border-radius: .875rem; padding: 1.15rem; background: var(--surface-1); box-shadow: inset 0 0 0 1px var(--border); display: flex; flex-direction: column; gap: .45rem; }
+    .track-top { display: flex; align-items: center; justify-content: space-between; font-size: .75rem; }
+    .track-card h3 { font-size: 1rem; font-weight: 600; }
+    .track-card p { font-size: .8125rem; color: var(--muted-foreground); }
+    .deliverable { margin-top: .25rem; padding: .5rem .75rem; border-radius: .5rem; background: var(--surface-2); font-size: .8125rem; font-weight: 500; }
+    .entries-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .95rem; margin-top: .9rem; }
+    .entry-card { position: relative; border-radius: .875rem; padding: 1rem; background: var(--surface-1); box-shadow: inset 0 0 0 1px var(--border); display: flex; flex-direction: column; }
+    .cover-img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: .5rem; box-shadow: inset 0 0 0 1px var(--border); margin-bottom: .75rem; }
+    .entry-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: .4rem; font-size: .75rem; }
+    .kind-text { color: var(--primary); font-weight: 600; }
+    .badge-soft { padding: .12rem .5rem; border-radius: 999px; background: var(--surface-2); color: var(--muted-foreground); font-size: .75rem; }
+    .entry-card h3 { font-size: .925rem; font-weight: 600; line-height: 1.45; }
+    .entry-card p { font-size: .8rem; color: var(--muted-foreground); margin-top: .4rem; line-height: 1.55; }
+    .author-row { margin-top: auto; padding-top: .65rem; font-size: .75rem; color: var(--muted-foreground); display: flex; justify-content: space-between; }
+    .next-step { margin-top: 2rem; padding: 1.2rem 1.4rem; border-radius: .875rem; background: var(--surface-1); box-shadow: inset 0 0 0 1px var(--border); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="ans-product-container navbar-inner">
+      <div>
+        <span class="brand"><span class="brand-dot"></span>ANS (AI Never Stops)</span>
+        <span class="nav-links" id="nav-caption" data-zh="项目广场 / Hub / 社区成长 / 赛事活动 / 市场 / 工作台" data-en="Explore / Hubs / Community / Competitions / Market / Workspace">项目广场 / Hub / 社区成长 / 赛事活动 / 市场 / 工作台</span>
+      </div>
+      <div class="toolbar">
+        <button class="btn-outline" id="btn-dir" onclick="switchView('directory')" data-zh="1. /hubs 目录挂载预览" data-en="1. /hubs Directory View">1. /hubs 目录挂载预览</button>
+        <button class="btn-primary" id="btn-det" onclick="switchView('detail')" data-zh="2. /hubs/nauhub 详情设计稿" data-en="2. /hubs/nauhub Detail UI">2. /hubs/nauhub 详情设计稿</button>
+        <button class="btn-outline" id="btn-spc" onclick="switchView('spec')" data-zh="3. UI 规范与接入契约" data-en="3. UI Spec & Contract">3. UI 规范与接入契约</button>
+        <button class="btn-outline" id="btn-lang" onclick="toggleLang()" data-zh="EN / 中文" data-en="ZH / EN">EN / 中文</button>
+        <button class="btn-outline" id="btn-theme" onclick="toggleTheme()" data-zh="切换深浅色" data-en="Light / Dark">切换深浅色</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- VIEW 1: DIRECTORY -->
+  <main id="view-directory" class="ans-product-container container hidden">
+    <header class="header-box">
+      <div>
+        <p class="eyebrow">ANS / HUBS DIRECTORY · MOUNTING PREVIEW</p>
+        <h1 data-zh="想从哪个方向开始？" data-en="Where do you want to start?">想从哪个方向开始？</h1>
+        <p class="lede" data-zh="Hub 把同一高校或方向的项目、工具和工作流放在一起。选一个进去看看。" data-en="Hubs group projects, tools, and runnable workflows by university or domain.">Hub 把同一高校或方向的项目、工具和工作流放在一起。选一个进去看看。</p>
+      </div>
+      <div class="toolbar">
+        <span class="btn-outline" data-zh="逛市场" data-en="Browse Market">逛市场</span>
+        <span class="btn-primary" data-zh="去工作台做项目 ↗" data-en="Open Workspace ↗">去工作台做项目 ↗</span>
+      </div>
+    </header>
+    <div class="directory-grid">
+      <article class="hub-card highlight">
+        <div class="hub-meta">
+          <span class="pill" data-zh="高校 Hub · 战略合作新上" data-en="University Hub · Partner">高校 Hub · 战略合作新上</span>
+          <span class="pill" data-zh="官方工程包与工具 3" data-en="Toolkits 3">官方工程包与工具 3</span>
+        </div>
+        <h2><span data-zh="NAUHub · 南京农业大学" data-en="NAUHub · Nanjing Agricultural Univ.">NAUHub · 南京农业大学</span><span>→</span></h2>
+        <p data-zh="南农智慧农科、生物育种、植保动医与卫岗/滨江双校区 AI 创客大本营。" data-en="Smart agriculture, bio-breeding, plant protection, vet medicine, and dual-campus AI maker hub.">南农智慧农科、生物育种、植保动医与卫岗/滨江双校区 AI 创客大本营。</p>
+        <p class="summary" data-zh="2 个能直接用的农科工作流，6 个南农参考项目，4 大特色赛道" data-en="2 runnable agri-workflows, 6 NAU showcase projects, 4 campus tracks">2 个能直接用的农科工作流，6 个南农参考项目，4 大特色赛道</p>
+      </article>
+      <article class="hub-card">
+        <div class="hub-meta"><span data-zh="高校 Hub" data-en="University Hub">高校 Hub</span></div>
+        <h2><span>CAUHub</span><span>→</span></h2>
+        <p data-zh="农大的赛事、项目与创客交流。" data-en="Competitions, projects, and maker community at China Agricultural University.">农大的赛事、项目与创客交流。</p>
+        <p class="summary" data-zh="直达农客松主会场，查看赛道规则与校内参赛指南" data-en="Jump straight to AgriHackathon tracks, rules, and campus guide">直达农客松主会场，查看赛道规则与校内参赛指南</p>
+      </article>
+      <article class="hub-card">
+        <div class="hub-meta"><span data-zh="知识 Hub" data-en="Knowledge Hub">知识 Hub</span></div>
+        <h2><span>ANS VibeHub</span><span>→</span></h2>
+        <p data-zh="学习 AI 编程：术语、课程、练习与 Skill。" data-en="Learn AI coding: visual terms, courses, exercises, and Skills.">学习 AI 编程：术语、课程、练习与 Skill。</p>
+        <p class="summary" data-zh="直达 371 个 AI 编程词条、2 门实战课与 10 大高频 Skill" data-en="371 visual AI coding terms, 2 hands-on courses, and 10 core Skills">直达 371 个 AI 编程词条、2 门实战课与 10 大高频 Skill</p>
+      </article>
+      <article class="hub-card">
+        <div class="hub-meta">
+          <span data-zh="主题 Hub" data-en="Topic Hub">主题 Hub</span>
+          <span class="pill" data-zh="官方工程包与在线工具 6" data-en="Toolkits 6">官方工程包与在线工具 6</span>
+        </div>
+        <h2><span data-zh="全栈开发 Hub" data-en="Full-Stack Hub">全栈开发 Hub</span><span>→</span></h2>
+        <p data-zh="网站与应用开发，从作品集到开源参考。" data-en="Web and application engineering, from portfolios to open-source references.">网站与应用开发，从作品集到开源参考。</p>
+        <p class="summary" data-zh="1 个能直接用的工作流，18 个参考项目" data-en="1 runnable workflow, 18 reference projects">1 个能直接用的工作流，18 个参考项目</p>
+      </article>
+    </div>
+  </main>
+
+  <!-- VIEW 2: DETAIL -->
+  <main id="view-detail" class="ans-product-container container">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.85rem;">
+      <span style="font-size:.8125rem;color:var(--muted-foreground);" data-zh="← 返回 Hub 目录" data-en="← Back to Hub Directory">← 返回 Hub 目录</span>
+      <div class="toolbar">
+        <span class="btn-outline" data-zh="去南农社区交流" data-en="NAU Campus Community">去南农社区交流</span>
+        <span class="btn-primary" data-zh="去工作台做项目 ↗" data-en="Open Workspace ↗">去工作台做项目 ↗</span>
+      </div>
+    </div>
+    <header class="header-box">
+      <div>
+        <p class="eyebrow">ANS / UNIVERSITY HUB · NANJING AGRICULTURAL UNIVERSITY (EST. 1902)</p>
+        <div class="title-row">
+          <span class="pill" data-zh="高校 Hub · 南京农业大学" data-en="University Hub · NAU">高校 Hub · 南京农业大学</span>
+          <h1 data-zh="NAUHub · 南京农业大学 AI 与智慧农科专区" data-en="NAUHub · Nanjing Agricultural University AI & Smart Ag Hub">NAUHub · 南京农业大学 AI 与智慧农科专区</h1>
+        </div>
+        <p class="lede" data-zh="把田间试验、作物表型分析、植保动医诊断与卫岗/滨江双校区创客点子变成能直接在线运行的工具。由南京农业大学开发者社区与 ANS 联合共建。" data-en="Turn field trials, crop phenomics, veterinary diagnostics, and Weigang/Binjiang campus ideas into live web tools. Co-built by the NAU developer community and ANS.">把田间试验、作物表型分析、植保动医诊断与卫岗/滨江双校区创客点子变成能直接在线运行的工具。由南京农业大学开发者社区与 ANS 联合共建。</p>
+        <p class="note" data-zh="面向南京农业大学的赛事、科研工具与创客协作专区；Hub 关联不代表校籍认证。" data-en="Dedicated competition, research tool, and maker collaboration space for Nanjing Agricultural University; Hub association does not imply official enrollment verification.">面向南京农业大学的赛事、科研工具与创客协作专区；Hub 关联不代表校籍认证。</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2 data-zh="从农科真问题到可运行作品：4 步上手路线" data-en="From Field Problem to Live Product in 4 Steps">从农科真问题到可运行作品：4 步上手路线</h2>
+      <p class="section-sub" data-zh="不需要从零配置服务器，直接复用现成农科模板与 ANS 工作台完成你的第一个作品" data-en="Skip server boilerplate—start from curated agri-templates and ANS Workspace">不需要从零配置服务器，直接复用现成农科模板与 ANS 工作台完成你的第一个作品</p>
+      <div class="pipeline-grid">
+        <article class="pipeline-card">
+          <div><span class="step-badge">STEP 01</span><h3 data-zh="选定农科或校园痛点赛道" data-en="Pick an Agri-Tech or Campus Track">选定农科或校园痛点赛道</h3><p data-zh="从作物表型、植保诊断、智慧畜牧或卫岗/滨江双校区场景中选定真问题。" data-en="Select a real problem in crop phenomics, plant protection, vet medicine, or campus life.">从作物表型、植保诊断、智慧畜牧或卫岗/滨江双校区场景中选定真问题。</p></div>
+          <div class="step-cta"><span data-zh="查看四大特色赛道" data-en="Explore 4 Tracks">查看四大特色赛道</span><span>→</span></div>
+        </article>
+        <article class="pipeline-card">
+          <div><span class="step-badge">STEP 02</span><h3 data-zh="领取南农工具包与模型算力" data-en="Claim NAU Toolkits & Compute">领取南农工具包与模型算力</h3><p data-zh="直接复用封装好的农科数据集脚本、论文图表模板与工作台多模型算力。" data-en="Reuse pre-packaged agri-datasets, paper figure templates, and multi-model compute.">直接复用封装好的农科数据集脚本、论文图表模板与工作台多模型算力。</p></div>
+          <div class="step-cta"><span data-zh="浏览农科工具包" data-en="Browse Toolkits">浏览农科工具包</span><span>→</span></div>
+        </article>
+        <article class="pipeline-card">
+          <div><span class="step-badge">STEP 03</span><h3 data-zh="在 ANS 工作台生成可运行原型" data-en="Build a Runnable Prototype">在 ANS 工作台生成可运行原型</h3><p data-zh="使用工作模式与 Agent 协作写出可在线演示的网页、数据分析看板或实验助手。" data-en="Collaborate with Agent in Work Mode to ship a live web app or analytics dashboard.">使用工作模式与 Agent 协作写出可在线演示的网页、数据分析看板或实验助手。</p></div>
+          <div class="step-cta"><span data-zh="去工作台开干" data-en="Open Workspace">去工作台开干</span><span>→</span></div>
+        </article>
+        <article class="pipeline-card">
+          <div><span class="step-badge">STEP 04</span><h3 data-zh="上架 NAUHub 展厅并组队迭代" data-en="Publish to NAUHub & Recruit">上架 NAUHub 展厅并组队迭代</h3><p data-zh="提交作品链接与 16:9 实机封面，收录进南农专区展示，招募跨学院队友。" data-en="Submit your live demo URL and 16:9 cover to feature in NAUHub and find teammates.">提交作品链接与 16:9 实机封面，收录进南农专区展示，招募跨学院队友。</p></div>
+          <div class="step-cta"><span data-zh="提交南农作品" data-en="Submit Project">提交南农作品</span><span>→</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-zh="南农四大 AI 创客与学科交叉赛道" data-en="4 Interdisciplinary AI & Smart Agriculture Tracks">南农四大 AI 创客与学科交叉赛道</h2>
+      <div class="tracks-grid">
+        <article class="track-card">
+          <div class="track-top"><span class="pill" data-zh="TRACK A · 作物与种业" data-en="TRACK A · AGRONOMY & BREEDING">TRACK A · 作物与种业</span><span class="badge-soft" data-zh="农学院 / 前沿交叉研究院" data-en="Agronomy / Frontier Research">农学院 / 前沿交叉研究院</span></div>
+          <h3 data-zh="智慧育种与大田作物表型分析" data-en="Smart Breeding & Crop Phenomics">智慧育种与大田作物表型分析</h3>
+          <p data-zh="针对水稻、小麦、大豆的冠层多光谱分析、穗粒数自动计数、抗逆性筛选与田间考种记录工具。" data-en="Canopy multispectral analysis, panicle grain counting, and field trial loggers for rice, wheat, and soybean.">针对水稻、小麦、大豆的冠层多光谱分析、穗粒数自动计数、抗逆性筛选与田间考种记录工具。</p>
+          <div class="deliverable" data-zh="交付物：可上传田间照片或 CSV 并输出可视化报告的 Web 工具" data-en="Deliverable: Web tool accepting field photos or CSVs to output visual reports">交付物：可上传田间照片或 CSV 并输出可视化报告的 Web 工具</div>
+        </article>
+        <article class="track-card">
+          <div class="track-top"><span class="pill" data-zh="TRACK B · 植保与动医" data-en="TRACK B · PLANT PROT. & VET MED">TRACK B · 植保与动医</span><span class="badge-soft" data-zh="植物保护学院 / 动物医学院" data-en="Plant Protection / Vet Med">植物保护学院 / 动物医学院</span></div>
+          <h3 data-zh="病虫害图谱识别与动物临床辅助" data-en="Plant Pathology & Vet Clinical Assistant">病虫害图谱识别与动物临床辅助</h3>
+          <p data-zh="融合田间病害叶片检索、农药安全配比计算、伴侣动物与经济动物常见症状临床决策树问答。" data-en="Field leaf disease retrieval, safe pesticide dosing calculator, and structured veterinary clinical Q&A.">融合田间病害叶片检索、农药安全配比计算、伴侣动物与经济动物常见症状临床决策树问答。</p>
+          <div class="deliverable" data-zh="交付物：支持图片或症状结构化输入的多模态诊断助手" data-en="Deliverable: Multimodal diagnostic assistant for images and clinical symptoms">交付物：支持图片或症状结构化输入的多模态诊断助手</div>
+        </article>
+        <article class="track-card">
+          <div class="track-top"><span class="pill" data-zh="TRACK C · 农工与遥感" data-en="TRACK C · AG-ROBOTICS & IOT">TRACK C · 农工与遥感</span><span class="badge-soft" data-zh="人工智能学院 / 工学院 / 资环学院" data-en="AI / Engineering / Resources">人工智能学院 / 工学院 / 资环学院</span></div>
+          <h3 data-zh="温室数字孪生与农业机器人仿真" data-en="Greenhouse Digital Twin & Ag-Robotics Simulation">温室数字孪生与农业机器人仿真</h3>
+          <p data-zh="利用 Three.js 与传感器时序数据构建温室环控看板、土壤碳氮循环预测与采摘路径规划可视化。" data-en="Three.js and sensor time-series dashboards for greenhouse climate control and soil carbon-nitrogen modeling.">利用 Three.js 与传感器时序数据构建温室环控看板、土壤碳氮循环预测与采摘路径规划可视化。</p>
+          <div class="deliverable" data-zh="交付物：3D/2D 交互式监控台或算法可视化仿真页" data-en="Deliverable: Interactive 3D/2D telemetry dashboard or algorithm simulator">交付物：3D/2D 交互式监控台或算法可视化仿真页</div>
+        </article>
+        <article class="track-card">
+          <div class="track-top"><span class="pill" data-zh="TRACK D · 双校区创客" data-en="TRACK D · DUAL-CAMPUS MAKER">TRACK D · 双校区创客</span><span class="badge-soft" data-zh="卫岗 × 滨江跨专业自由组队" data-en="Weigang × Binjiang Open Track">卫岗 × 滨江跨专业自由组队</span></div>
+          <h3 data-zh="卫岗 × 滨江双校区效率与学术助手" data-en="Weigang × Binjiang Dual-Campus Utility & Academic Tools">卫岗 × 滨江双校区效率与学术助手</h3>
+          <p data-zh="面向南农师生的跨校区通勤班车时刻、实验室大型仪器共享预约、选课指南与青年创客组队名片。" data-en="Shuttle schedules across Weigang and Binjiang campuses, lab instrument sharing, and student maker portfolios.">面向南农师生的跨校区通勤班车时刻、实验室大型仪器共享预约、选课指南与青年创客组队名片。</p>
+          <div class="deliverable" data-zh="交付物：南农同学打开手机就能直接用的轻量级 Web 应用" data-en="Deliverable: Mobile-ready web utility built for daily NAU student life">交付物：南农同学打开手机就能直接用的轻量级 Web 应用</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-zh="南农专属工程包与科研工具" data-en="NAU Engineering Packs & Research Toolkits">南农专属工程包与科研工具</h2>
+      <div class="entries-grid">
+        <article class="entry-card">
+          <div class="entry-meta"><span class="kind-text" data-zh="校内工具入口" data-en="Campus Tool">校内工具入口</span><span class="pill" data-zh="免费校内工具" data-en="Free Campus Tool">免费校内工具</span></div>
+          <h3 data-zh="稻麦病虫害叶片视觉分割与防治配比工具包 ↗" data-en="Rice & Wheat Leaf Lesion Segmentation & Dosing Kit ↗">稻麦病虫害叶片视觉分割与防治配比工具包 ↗</h3>
+          <p data-zh="内置长江中下游常见病斑标注规范、田间光照归一化脚本与安全间隔期检索表。" data-en="Includes Yangtze Basin lesion annotation schemas, field illumination normalization scripts, and safe interval tables.">内置长江中下游常见病斑标注规范、田间光照归一化脚本与安全间隔期检索表。</p>
+        </article>
+        <article class="entry-card">
+          <div class="entry-meta"><span class="kind-text" data-zh="农科工程包" data-en="Agri-Tech Pack">农科工程包</span><span class="pill" data-zh="10 积分" data-en="10 Credits">10 积分</span></div>
+          <h3 data-zh="生物育种与数量遗传学文献精读及实验记录模板 ↗" data-en="Bio-Breeding & Quantitative Genetics Literature Kit ↗">生物育种与数量遗传学文献精读及实验记录模板 ↗</h3>
+          <p data-zh="针对 GWAS、QTL 定位与表型组学论文的结构化提炼提示词与田间考种数据表模板。" data-en="Structured extraction prompts for GWAS/QTL papers and standardized field breeding log templates.">针对 GWAS、QTL 定位与表型组学论文的结构化提炼提示词与田间考种数据表模板。</p>
+        </article>
+        <article class="entry-card">
+          <div class="entry-meta"><span class="kind-text" data-zh="农科工程包" data-en="Agri-Tech Pack">农科工程包</span><span class="pill" data-zh="15 积分" data-en="15 Credits">15 积分</span></div>
+          <h3 data-zh="农科论文级等距立体实验装置图与统计图表引擎 ↗" data-en="Isometric Agri-Experiment Apparatus & SVG Figure Engine ↗">农科论文级等距立体实验装置图与统计图表引擎 ↗</h3>
+          <p data-zh="纯代码生成温室环控原理图、土壤碳氮循环路径图与高对比度学术矢量配图。" data-en="Generate publication-grade greenhouse schematics, soil carbon-nitrogen cycle diagrams, and vector figures in code.">纯代码生成温室环控原理图、土壤碳氮循环路径图与高对比度学术矢量配图。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-zh="南农师生标杆项目与开源参考（3 列 16:9 整卡可点）" data-en="NAU Faculty & Student Showcase Projects (3-Col 16:9 Cards)">南农师生标杆项目与开源参考（3 列 16:9 整卡可点）</h2>
+      <div class="entries-grid">
+        <article class="entry-card">
+          <img class="cover-img" src="./covers/nau-phenomics.svg" alt="Rice Phenomics" />
+          <div class="entry-meta"><span class="kind-text" data-zh="南农师生作品" data-en="NAU Campus Project">南农师生作品</span><span class="badge-soft" data-zh="农学院 × 人工智能学院" data-en="Agronomy × AI">农学院 × 人工智能学院</span></div>
+          <h3 data-zh="稻穗粒数与千粒重 AI 视觉快测台 ↗" data-en="Rice Panicle Grain & Weight Vision Analyzer ↗">稻穗粒数与千粒重 AI 视觉快测台 ↗</h3>
+          <p data-zh="手机拍摄单株稻穗即可在浏览器内完成枝梗分割、实粒/瘪粒计数并导出标准考种 Excel 表。" data-en="Snap a single rice panicle on mobile to segment branches, count filled vs. empty grains, and export spreadsheets.">手机拍摄单株稻穗即可在浏览器内完成枝梗分割、实粒/瘪粒计数并导出标准考种 Excel 表。</p>
+          <div class="author-row"><span data-zh="钟山表型组实验室团队" data-en="Zhongshan Phenomics Lab">钟山表型组实验室团队</span><span>16:9 HD</span></div>
+        </article>
+        <article class="entry-card">
+          <img class="cover-img" src="./covers/nau-plant-protection.svg" alt="Plant Protection" />
+          <div class="entry-meta"><span class="kind-text" data-zh="南农师生作品" data-en="NAU Campus Project">南农师生作品</span><span class="badge-soft" data-zh="植物保护学院" data-en="Plant Protection">植物保护学院</span></div>
+          <h3 data-zh="长江中下游稻麦病虫害田间图谱与防治检索 ↗" data-en="Yangtze Basin Rice & Wheat Disease Field Atlas ↗">长江中下游稻麦病虫害田间图谱与防治检索 ↗</h3>
+          <p data-zh="收录 120 类高发病害实拍特征对比，支持按生育期、叶片病斑形态快速定位防治药剂与安全间隔期。" data-en="Compare 120 common field diseases by growth stage and lesion morphology, with safe treatment intervals.">收录 120 类高发病害实拍特征对比，支持按生育期、叶片病斑形态快速定位防治药剂与安全间隔期。</p>
+          <div class="author-row"><span data-zh="南农植保图谱创客组" data-en="NAU Plant Protection Makers">南农植保图谱创客组</span><span>16:9 HD</span></div>
+        </article>
+        <article class="entry-card">
+          <img class="cover-img" src="./covers/nau-vet-clinic.svg" alt="Vet Clinical" />
+          <div class="entry-meta"><span class="kind-text" data-zh="南农师生作品" data-en="NAU Campus Project">南农师生作品</span><span class="badge-soft" data-zh="动物医学院" data-en="Veterinary Medicine">动物医学院</span></div>
+          <h3 data-zh="兽医临床病例树与处方配伍禁忌速查 ↗" data-en="Vet Clinical Decision Tree & Drug Checker ↗">兽医临床病例树与处方配伍禁忌速查 ↗</h3>
+          <p data-zh="将经典临床病例拆解为交互式问诊决策树，输入体重与给药途径即可核对剂量区间与配伍冲突。" data-en="Interactive diagnostic decision trees from real veterinary cases with weight-based dosage verification.">将经典临床病例拆解为交互式问诊决策树，输入体重与给药途径即可核对剂量区间与配伍冲突。</p>
+          <div class="author-row"><span data-zh="卫岗动医青年开发者社" data-en="Weigang Vet Dev Society">卫岗动医青年开发者社</span><span>16:9 HD</span></div>
+        </article>
+        <article class="entry-card">
+          <img class="cover-img" src="./covers/nau-soil-carbon.svg" alt="Soil Carbon" />
+          <div class="entry-meta"><span class="kind-text" data-zh="南农师生作品" data-en="NAU Campus Project">南农师生作品</span><span class="badge-soft" data-zh="资源与环境科学学院" data-en="Resources & Env">资源与环境科学学院</span></div>
+          <h3 data-zh="农田土壤有机碳与温室气体排放测算器 ↗" data-en="Farmland Soil Organic Carbon & GHG Calculator ↗">农田土壤有机碳与温室气体排放测算器 ↗</h3>
+          <p data-zh="输入耕作方式、秸秆还田比例与氮肥施用量，实时绘制碳汇变化曲线并生成政策评估简报。" data-en="Input tillage practices, straw return ratios, and nitrogen rates to plot carbon sequestration curves.">输入耕作方式、秸秆还田比例与氮肥施用量，实时绘制碳汇变化曲线并生成政策评估简报。</p>
+          <div class="author-row"><span data-zh="太湖流域农田生态组" data-en="Taihu Agro-Ecology Team">太湖流域农田生态组</span><span>16:9 HD</span></div>
+        </article>
+        <article class="entry-card">
+          <img class="cover-img" src="./covers/nau-greenhouse-twin.svg" alt="Greenhouse Twin" />
+          <div class="entry-meta"><span class="kind-text" data-zh="ANS 官方联合项目" data-en="ANS Official Co-Build">ANS 官方联合项目</span><span class="badge-soft" data-zh="智慧农业 × 工学院" data-en="Smart Ag × Eng">智慧农业 × 工学院</span></div>
+          <h3 data-zh="玻璃温室光温水肥 3D 数字孪生沙盘 ↗" data-en="3D Glass Greenhouse Climate Digital Twin ↗">玻璃温室光温水肥 3D 数字孪生沙盘 ↗</h3>
+          <p data-zh="基于 Three.js 的实时温室环控仿真模板，支持天窗开合、遮阳幕布、滴灌管网状态与光照热力图切换。" data-en="Three.js real-time greenhouse simulation template featuring roof vents, drip lines, and PAR light heatmaps.">基于 Three.js 的实时温室环控仿真模板，支持天窗开合、遮阳幕布、滴灌管网状态与光照热力图切换。</p>
+          <div class="author-row"><span data-zh="ANS × NAU 联合工作组" data-en="ANS × NAU Joint Working Group">ANS × NAU 联合工作组</span><span>16:9 HD</span></div>
+        </article>
+        <article class="entry-card">
+          <img class="cover-img" src="./covers/nau-campus-hub.svg" alt="Campus Companion" />
+          <div class="entry-meta"><span class="kind-text" data-zh="南农师生作品" data-en="NAU Campus Project">南农师生作品</span><span class="badge-soft" data-zh="卫岗 × 滨江双校区" data-en="Weigang × Binjiang">卫岗 × 滨江双校区</span></div>
+          <h3 data-zh="南农双校区科研生活通（班车 / 仪器共享 / 组队） ↗" data-en="NAU Dual-Campus Research & Maker Companion ↗">南农双校区科研生活通（班车 / 仪器共享 / 组队） ↗</h3>
+          <p data-zh="一站式查看卫岗与滨江校区通勤时刻、大型公共仪器预约空档，并按技能标签寻找农客松队友。" data-en="Check Weigang-Binjiang shuttle schedules, shared lab instrument availability, and recruit hackathon teammates.">一站式查看卫岗与滨江校区通勤时刻、大型公共仪器预约空档，并按技能标签寻找农客松队友。</p>
+          <div class="author-row"><span data-zh="NAU 开源创客协会" data-en="NAU Open-Source Maker Assoc.">NAU 开源创客协会</span><span>16:9 HD</span></div>
+        </article>
+      </div>
+    </section>
+
+    <aside class="next-step">
+      <div>
+        <h3 style="font-size:1rem;font-weight:600;" data-zh="看完了南农参考项目？现在动手做你的作品" data-en="Inspired by NAU projects? Build your own tool now">看完了南农参考项目？现在动手做你的作品</h3>
+        <p style="font-size:.8125rem;color:var(--muted-foreground);margin-top:.2rem;" data-zh="直接去工作台用 Agent 生成第一版农科工具页面，或去高校社区找跨学院队友。" data-en="Generate your first interactive agri-tech app with Agent in Workspace, or find cross-college teammates.">直接去工作台用 Agent 生成第一版农科工具页面，或去高校社区找跨学院队友。</p>
+      </div>
+      <div class="toolbar">
+        <span class="btn-outline" data-zh="去南农社区交流" data-en="NAU Campus Community">去南农社区交流</span>
+        <span class="btn-primary" data-zh="去工作台做项目 ↗" data-en="Open Workspace ↗">去工作台做项目 ↗</span>
+      </div>
+    </aside>
+  </main>
+
+  <!-- VIEW 3: SPEC & CONTRACT -->
+  <main id="view-spec" class="ans-product-container container hidden">
+    <header class="header-box">
+      <div>
+        <p class="eyebrow">ANS × NAUHUB · DESIGN SYSTEM & ZERO-LEAK INTEGRATION SPEC</p>
+        <h1>NAUHub UI 设计规范、色彩阶梯与零源码泄露接入契约</h1>
+        <p class="lede">南农合作开发团队无需接触 ANS 数据库、计费或私有鉴权代码，只需在此独立沙盒内开发并通过 <code>npm run verify</code>，即可 1:1 挂载至 <code>ans.cauai.fun/hubs/nauhub</code>。</p>
+      </div>
+    </header>
+    <div class="tracks-grid">
+      <article class="track-card">
+        <div class="track-top"><span class="pill">RULE 01 · 色彩与明度分层</span><span class="badge-soft">dachang-ui</span></div>
+        <h3>严禁纯黑 #000，依靠 1%–3% 微明度差 + 南京农大钟山绿</h3>
+        <p>浅色采用暖白纸感底色 <code>#f5f5f3</code> 与一级卡片 <code>#fcfcfb</code>；暗色采用深炭底色 <code>#0b0b0a</code> 与一级卡片 <code>#151515</code>（字重自动降 40 防白字发胖）。品牌强调色取自南农钟山绿 <code>#1b6b4c</code>（暗色 <code>#34d399</code>）。</p>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.4rem;">
+          <div style="padding:.65rem;border-radius:.5rem;background:var(--surface-2);color:var(--foreground);font-size:.8125rem;font-family:monospace;">#f5f5f3 · Light Bg</div>
+          <div style="padding:.65rem;border-radius:.5rem;background:var(--surface-2);color:var(--foreground);font-size:.8125rem;font-family:monospace;">#fcfcfb · Surface 1</div>
+          <div style="padding:.65rem;border-radius:.5rem;background:var(--primary);color:var(--primary-foreground);font-size:.8125rem;font-family:monospace;">#1b6b4c · NAU Green</div>
+          <div style="padding:.65rem;border-radius:.5rem;background:var(--primary-soft);color:var(--primary);font-size:.8125rem;font-family:monospace;">#0b0b0a · Dark Base</div>
+        </div>
+      </article>
+      <article class="track-card">
+        <div class="track-top"><span class="pill">RULE 02 · 卡片解剖与交互铁律</span><span class="badge-soft">ans-ui-ux-baseline</span></div>
+        <h3>外圆角 14px = 内圆角 8px + 间距，16:9 封面整卡可点</h3>
+        <p>桌面端 1280px 固定 3 列网格、手机端 375px 单列自适应；使用 <code>.stretchedLink::after</code> 伪元素覆盖整张卡片点击热区；单张卡片仅保留唯一主跳转目标，严禁原生 Emoji 与 AI 腔黑话（赋能/抓手/闭环/主理人）。</p>
+        <div class="deliverable">契约校验命令：<code>npm run verify</code>（自动检查零私有文件、零 #000、零 Emoji、中英双语对齐与 16:9 封面完整性）</div>
+      </article>
+      <article class="track-card">
+        <div class="track-top"><span class="pill">RULE 03 · 零源码泄露沙盒边界</span><span class="badge-soft">Security Boundary</span></div>
+        <h3>双仓隔离架构：南农改 <code>ans-nauhub-starter</code>，ANS 5 分钟合入</h3>
+        <p>本仓库仅提供与 ANS 主站 1:1 对齐的宿主外壳（<code>ans-product-shell</code> + <code>hubs.module.css</code>）与强类型数据契约（<code>NauHubSubmissionPayload</code>），完全剥离 Prisma、Auth、Billing 与 API 密钥。</p>
+        <div class="deliverable">交付物：<code>src/data/nauhub-submission.ts</code> + <code>src/components/nauhub/*</code> + <code>public/covers/*</code></div>
+      </article>
+      <article class="track-card">
+        <div class="track-top"><span class="pill">RULE 04 · AI 辅助开发闭环</span><span class="badge-soft">sprint-prompt</span></div>
+        <h3>配套十节结构权威提示词，喂给 Claude Code / Codex 一口气跑通</h3>
+        <p>随仓附带 <code>docs/prompts/2026-11-04-nauhub-v1-sprint.md</code>（含固定字段「Skill 与工作流路由」）、<code>docs/PRD-NAUHUB.md</code> 与 <code>docs/UI-DESIGN-SPEC.md</code>，南农团队可直接复制提示词驱动 AI 完成扩充与验收。</p>
+        <div class="deliverable">目标完成度：两轮无上下文盲测 ≥ 9.0 / 10 分</div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    let currentLang = "zh";
+    let currentTheme = "light";
+
+    function switchView(v) {
+      document.getElementById("view-directory").classList.toggle("hidden", v !== "directory");
+      document.getElementById("view-detail").classList.toggle("hidden", v !== "detail");
+      document.getElementById("view-spec").classList.toggle("hidden", v !== "spec");
+      document.getElementById("btn-dir").className = v === "directory" ? "btn-primary" : "btn-outline";
+      document.getElementById("btn-det").className = v === "detail" ? "btn-primary" : "btn-outline";
+      document.getElementById("btn-spc").className = v === "spec" ? "btn-primary" : "btn-outline";
+    }
+
+    function applyLang(lang) {
+      currentLang = lang;
+      document.querySelectorAll("[data-" + lang + "]").forEach((el) => {
+        el.textContent = el.getAttribute("data-" + lang);
+      });
+    }
+
+    function toggleLang() {
+      applyLang(currentLang === "zh" ? "en" : "zh");
+    }
+
+    function applyTheme(t) {
+      currentTheme = t;
+      document.documentElement.setAttribute("data-theme", t);
+    }
+
+    function toggleTheme() {
+      applyTheme(currentTheme === "light" ? "dark" : "light");
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("view")) switchView(params.get("view"));
+    if (params.get("theme")) applyTheme(params.get("theme"));
+    if (params.get("locale")) applyLang(params.get("locale"));
+  </script>
+</body>
+</html>
