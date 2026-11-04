@@ -2,6 +2,9 @@
 
 欢迎来到 **ANS (AI Never Stops，`https://ans.cauai.fun`) × 南京农业大学 (Nanjing Agricultural University, NAU)** 联合开发仓库！
 
+- **飞书在线联合开发全案手册（含 PRD + UI 设计稿大图 + 冲刺 Prompt）**：[https://narcb9vct6.feishu.cn/wiki/CkunwgTraiqXDSkdDPnctcLbnbe](https://narcb9vct6.feishu.cn/wiki/CkunwgTraiqXDSkdDPnctcLbnbe)
+- **GitHub 公开脱敏脚手架仓库**：[https://github.com/1008611-creater/ans-nauhub-starter](https://github.com/1008611-creater/ans-nauhub-starter)
+
 本仓库为南农合作开发团队提供 **100% 脱敏、开箱即用** 的 `NAUHub`（`/hubs/nauhub`）前端沙盒环境、TypeScript 接入契约、大厂级 UI 设计稿以及可直接喂给 Claude Code / Codex / Cursor 的 **十节结构权威开发提示词（`sprint-prompt`）**。
 
 ---
